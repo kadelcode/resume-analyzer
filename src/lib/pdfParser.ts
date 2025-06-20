@@ -1,6 +1,7 @@
-import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 // @ts-ignore
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.js';
+import pdfjsWorker from 'pdfjs-dist/legacy/build/pdf.worker.js';
+
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 export async function extractTextFromPDF(buffer: ArrayBuffer): Promise<string> {
     const loadingTask = pdfjsLib.getDocument({ data: buffer });
