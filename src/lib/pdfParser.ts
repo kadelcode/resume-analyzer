@@ -4,6 +4,7 @@ import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 // Import the PDF.js worker script (TypeScript ignore needed due to import type)
 // @ts-ignore
 import pdfjsWorker from 'pdfjs-dist/legacy/build/pdf.worker.js';
+import { TextItem } from 'pdfjs-dist/types/src/display/api';
 
 // Configure PDF.js to use the worker for processing
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
@@ -34,8 +35,8 @@ export async function extractTextFromPDF(buffer: ArrayBuffer): Promise<string> {
         // 1. Map each item to its string content (if it has a 'str' property)
         // 2. Join all strings with spaces
         // 3. Add a newline at the end of each page's content
-        fullText += content.items.map((item: any) =>
-          'str' in item ? item.str : ''
+        fullText += content.items.map((item) =>
+          'str' in item ? (item as TextItem).str : ''
         ).join(' ') + '\n';
     }
 
