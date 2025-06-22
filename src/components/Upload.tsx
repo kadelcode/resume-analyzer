@@ -36,7 +36,7 @@ export default function Upload() {
     };
 
     return (
-        <div className="bg-stone-900 text-gray-200 rounded-lg shadow-xl p-8 max-w-2xl mx-auto">
+        <div id="resume-analyzer" className="bg-stone-900 text-gray-200 rounded-lg shadow-xl p-8 max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold mb-6 text-center">
                 Upload Your Resume for Instant Analysis
             </h2>
@@ -128,7 +128,7 @@ export default function Upload() {
                             Your Personalized Resume Report
                         </h2>
                         <div className="bg-stone-900 rounded-lg p-6 border border-gray-200 whitespace-pre-wrap">
-                            {feedback}
+                            {feedback.replace(/\* /g, '• ')}
                         </div>
                         <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
                             <p className="text-blue-700">
