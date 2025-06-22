@@ -10,7 +10,10 @@ export default function Home() {
     <main className="min-h-screen bg-[url('/patterns/connecting-dots.svg')] bg-[length:80px_80px] bg-fixed">
       <div 
         className="backdrop-blur-xs"
-        style={{backdropFilter:'blur(4px)'}}
+        style={{
+          backdropFilter:'blur(4px)',
+          WebkitBackdropFilter: 'blur(4px)'
+        }}
       >
         {/* Header */}
         <Header />
