@@ -22,7 +22,7 @@ export default function ValueProposition() {
             </div>
             <h3 className="font-bold text-gray-100 text-lg mb-2">Actionable Feedback</h3>
             <p className="text-gray-500">
-              Get specific recommendations to improve your resume's impact, not just
+              Get specific recommendations to improve your resume&apos;s impact, not just
               generic advice.
             </p>
           </div>

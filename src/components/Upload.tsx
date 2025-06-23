@@ -1,19 +1,46 @@
 "use client";
 
-import { useState, useEffect } from "react";// import { extractTextFromPDF } from "@/lib/pdfParser";
+import { useState, useEffect } from "react";
+
+// Minimal type declarations for PDF.js objects
+    type PDFDocumentProxy = {
+        numPages: number;
+        getPage: (pageNumber: number) => Promise<PDFPageProxy>;
+    };
+
+    type PDFPageProxy = {
+        getTextContent: () => Promise<TextContent>;
+    };
+
+    type TextContent = {
+        items: TextItem[];
+    };
+
+    type TextItem = {
+        str: string;
+    };
+
 
 // Extend the Window interface to include pdfjsLib
 declare global {
-    interface Window {
-        pdfjsLib?: any; // Use 'any' since PDFJSStatic is not available without pdfjs-dist
-    }
+  interface Window {
+    pdfjsLib?: {
+      getDocument: (options: { data: ArrayBuffer }) => {
+        promise: PDFDocumentProxy;
+      };
+      GlobalWorkerOptions: {
+        workerSrc: string;
+      };
+    };
+  }
 }
+
+// import { extractTextFromPDF } from "@/lib/pdfParser";
 
 // Import the main PDF.js library
 // import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 
 // Import the PDF.js worker script (TypeScript ignore needed due to import type)
-// @ts-ignore
 // import pdfjsWorker from 'pdfjs-dist/legacy/build/pdf.worker.js';
 // import { TextItem } from 'pdfjs-dist/types/src/display/api';
 
@@ -43,13 +70,15 @@ export default function Upload() {
 
     const extractTextFromPDF = async (file: File): Promise<string> => {
         const buffer = await file.arrayBuffer();
-        // @ts-ignore
-        const pdf = await window.pdfjsLib.getDocument({ data: buffer }).promise;
+        if (!window.pdfjsLib) {
+            throw new Error("PDF.js library is not loaded. Please try again in a moment.");
+        }
+        const pdf: PDFDocumentProxy = await window.pdfjsLib.getDocument({ data: buffer }).promise;
         let text = '';
         for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const content = await page.getTextContent();
-        text += content.items.map((item: any) => item.str).join(' ') + '\n';
+            const page: PDFPageProxy = await pdf.getPage(i);
+            const content: TextContent = await page.getTextContent();
+            text += content.items.map((item: TextItem) => item.str).join(' ') + '\n';
         }
         return text;
     };
