@@ -1,13 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { extractTextFromPDF } from "@/lib/pdfParser";
+//import { extractTextFromPDF } from "@/lib/pdfParser";
+
+// Import the main PDF.js library
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+
+// Import the PDF.js worker script (TypeScript ignore needed due to import type)
+// @ts-ignore
+import pdfjsWorker from 'pdfjs-dist/legacy/build/pdf.worker.js';
+import { TextItem } from 'pdfjs-dist/types/src/display/api';
+
+// Configure PDF.js to use the worker for processing
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export default function Upload() {
     const [file, setFile] = useState<File | null>(null);
     const [feedback, setFeedback] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    const extractTextFromPDF = async (buffer: ArrayBuffer): Promise<string> => {
+        const loadingTask = pdfjsLib.getDocument({ data: buffer });
+        const pdf = await loadingTask.promise;
+        let fullText = '';
+        for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        fullText += content.items.map((item: any) => ('str' in item ? item.str : '')).join(' ') + '\n';
+        }
+        return fullText;
+    };
 
     const handleUpload = async () => {
         if (!file) return;
