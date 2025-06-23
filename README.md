@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI-Powered Resume Analyzer
+
+A web app that allows users to upload their resumes in PDF format and receive personalized, AI-generated feedback using large language models (LLMs).
+
+Built with **Next.js**, **LangChain**, **Together.ai**, and **PDF.js**.
+
+---
+
+## Features
+
+- Upload and parse PDF resumes
+- Analyze content using Together.ai (Mixtral model)
+- Bullet-point feedback on resume clarity, skills, formatting, and relevance
+- Suggestions tailored to job-seeking best practices
+
+---
+
+## Tech Stack
+
+| Layer           | Tech                             |
+|-----------------|----------------------------------|
+| Frontend        | Next.js App Router + TailwindCSS |
+| File Parsing    | PDF.js (via `pdfjs-dist`)        |
+| LLM             | LangChain + Together.ai          |
+| Hosting         | Vercel (recommended)             |
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Clone the repo
+```
+git clone https://github.com/kadelcode/resume-analyzer.git
+cd resume-analyzer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Add your Together.ai API key
+Create a ```.env.local``` file:
+```
+TOGETHER_API_KEY=your_together_api_key_here
+```
+You can get a free API key at [https://api.together.xyz](https://api.together.xyz)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run the development server
+```
+npm run dev
+```
+Visit http://localhost:3000 to upload a resume and see feedback
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
+```
+.
+├── app
+│   ├── api
+│   │   └── analyze
+│   │       └── route.ts
+│   └── page.tsx
+│   └── components/ 
+├── lib
+│   └── pdfParser.ts
+├── public
+├── styles
+├── .env.local
+├── package.json
+└── README.md
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Example Prompt
+You're a resume reviewer. Analyze the resume below and give personalized feedback as clear bullet points using “•” instead of “*”.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## To Do/Improvements
+- Add DOCX support using ```mammoth.js```
+- Match resume to uploaded Job Descriptions
+- Export feedback to PDF
+- User authentication + saved analysis history
+
+---
+
+## Free Tier Tips
+- Together.ai gives you free dialy tokens
+- All parsing and UI happend client-side for best performance
+
+---
+
+## License
+MIT License - free to use and modify
+
+---
+
+## Acknowledgements
+- [Together.ai](https://api.together.xyz/)
+- [LangChain](https://www.langchain.com/)
+- [PDF.js](https://mozilla.github.io/pdf.js/)
