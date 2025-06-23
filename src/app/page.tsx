@@ -1,9 +1,12 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Upload from "@/components/Upload";
+// import Upload from "@/components/Upload";
+import dynamic from 'next/dynamic';
 import ValueProposition from "@/components/ValueProposition";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+
+const Upload = dynamic(() => import('@/components/Upload'), { ssr: false})
 
 export default function Home() {
   return (
