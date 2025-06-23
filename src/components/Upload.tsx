@@ -1,25 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
-// import { extractTextFromPDF } from "@/lib/pdfParser";
-
-// Import the main PDF.js library
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
-
-// Import the PDF.js worker script (TypeScript ignore needed due to import type)
-// @ts-ignore
-import pdfjsWorker from 'pdfjs-dist/legacy/build/pdf.worker.js';
-// import { TextItem } from 'pdfjs-dist/types/src/display/api';
+import { useState, useEffect } from "react";// import { extractTextFromPDF } from "@/lib/pdfParser";
 
 // Extend the Window interface to include pdfjsLib
 declare global {
-  interface Window {
-    pdfjsLib?: typeof pdfjsLib;
-  }
+    interface Window {
+        pdfjsLib?: any; // Use 'any' since PDFJSStatic is not available without pdfjs-dist
+    }
 }
 
+// Import the main PDF.js library
+// import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+
+// Import the PDF.js worker script (TypeScript ignore needed due to import type)
+// @ts-ignore
+// import pdfjsWorker from 'pdfjs-dist/legacy/build/pdf.worker.js';
+// import { TextItem } from 'pdfjs-dist/types/src/display/api';
+
+
 // Configure PDF.js to use the worker for processing
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+// pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export default function Upload() {
     const [file, setFile] = useState<File | null>(null);
