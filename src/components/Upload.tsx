@@ -190,7 +190,7 @@ export default function Upload() {
 
                 {/* Error Message */}
                 {error && (
-                    <div className="p-4 bg-stone-700 border-l-4 border-red-500 text-red-700 rounded">
+                    <div className="p-4 bg-stone-700 border-l-4 border-red-500 text-red-500 rounded">
                         <p>{error}</p>
                     </div>
                 )}
