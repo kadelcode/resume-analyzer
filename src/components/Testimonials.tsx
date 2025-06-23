@@ -1,6 +1,6 @@
 export default function Testimonials() {
     return (
-        <div className="mt-16 max-w-3xl mx-auto">
+        <div className="mt-16 max-w-3xl mx-6 md:mx-auto">
             <h3 className="text-center text-gray-500 uppercase text-sm font-medium mb-6">
                 Trusted by job seekers worldwide
             </h3>
